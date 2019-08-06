@@ -1038,19 +1038,34 @@ Resources:
               - Action: ['s3:ListBucket']
                 Effect: Allow
                 Resource: ['arn:aws:s3:::/aws-deployment-test/releases/confluence']
-              - Action: ['s3:Get*']
+              - Action:
+                - 's3:GetObject'
+                - 's3:GetObjectAcl'
+                - 's3:GetObjectVersion'
+                - 's3:GetObjectVersionAcl'
+                - 's3:GetBucketVersioning'
                 Effect: Allow
                 Resource: ['arn:aws:s3:::/aws-deployment-test/releases/confluence/*']
               - Action: ['s3:ListBucket']
                 Effect: Allow
                 Resource: ['arn:aws:s3:::/atlassian-software/releases/confluence']
-              - Action: ['s3:Get*']
+              - Action:
+                - 's3:GetObject'
+                - 's3:GetObjectAcl'
+                - 's3:GetObjectVersion'
+                - 's3:GetObjectVersionAcl'
+                - 's3:GetBucketVersioning'
                 Effect: Allow
                 Resource: ['arn:aws:s3:::/atlassian-software/releases/confluence/*']
               - Action: ['s3:ListBucket']
                 Effect: Allow
                 Resource: ['arn:aws:s3:::/atlassian-software/snapshots/confluence']
-              - Action: ['s3:Get*']
+              - Action:
+                - 's3:GetObject'
+                - 's3:GetObjectAcl'
+                - 's3:GetObjectVersion'
+                - 's3:GetObjectVersionAcl'
+                - 's3:GetBucketVersioning'
                 Effect: Allow
                 Resource: ['arn:aws:s3:::/atlassian-software/snapshots/confluence/*']
   ConfluenceClusterNodeInstanceProfile:
@@ -1628,7 +1643,7 @@ Resources:
       DBInstanceIdentifier: !Ref AWS::StackName
       DBSubnetGroupName: !Ref DBSubnetGroup
       Engine: postgres
-      EngineVersion: 9.6
+      EngineVersion: 9.6.11
       Iops: !If [DBProvisionedIops, !Ref DBIops, !Ref 'AWS::NoValue']
       KmsKeyId: !If [UseDatabaseEncryption, !GetAtt EncryptionKey.Arn, !Ref 'AWS::NoValue']
       MasterUsername: postgres
