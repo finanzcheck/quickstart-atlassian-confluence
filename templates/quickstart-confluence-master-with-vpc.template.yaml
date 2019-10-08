@@ -167,7 +167,7 @@ Metadata:
       PrivateSubnet2CIDR:
         default: AZ2 private IP address block
       PublicSubnet1CIDR:
-        default: AZ1 public IP address block        
+        default: AZ1 public IP address block
       PublicSubnet2CIDR:
         default: AZ2 public IP address block
       SSLCertificateARN:
@@ -377,6 +377,7 @@ Parameters:
       - db.t2.large
       - db.t2.xlarge
       - db.t2.2xlarge
+      - db.t3.medium
     ConstraintDescription: Must be a valid RDS instance class from the list.
     Description: RDS instance type.
     Type: String
@@ -672,7 +673,7 @@ Parameters:
 
   # VPC parameters
   AvailabilityZones:
-    Description: 'List of Availability Zones to use for the subnets in the VPC. Note: You must specify 2 AZs here; 
+    Description: 'List of Availability Zones to use for the subnets in the VPC. Note: You must specify 2 AZs here;
       if more are specified only the first 2 will be used.'
     Type: List<AWS::EC2::AvailabilityZone::Name>
   QSS3BucketName:
