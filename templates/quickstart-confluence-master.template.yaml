@@ -381,7 +381,6 @@ Parameters:
       - db.t2.large
       - db.t2.xlarge
       - db.t2.2xlarge
-      - db.t3.medium
     ConstraintDescription: Must be a valid RDS instance class from the list
     Description: RDS instance type (must be R4 family if using Amazon Aurora).
     Type: String
@@ -1573,29 +1572,6 @@ Resources:
   DB:
     Type: AWS::CloudFormation::Stack
     Properties:
-<<<<<<< HEAD
-      AllocatedStorage: !Ref DBStorage
-      DBInstanceClass: !Ref DBInstanceClass
-      DBInstanceIdentifier: !Ref AWS::StackName
-      DBSubnetGroupName: !Ref DBSubnetGroup
-      Engine: postgres
-      EngineVersion: 9.6.11
-      Iops: !If [DBProvisionedIops, !Ref DBIops, !Ref 'AWS::NoValue']
-      MasterUsername: postgres
-      MasterUserPassword: !If [DoSetDBMasterUserPassword, !Ref DBMasterUserPassword, !Ref 'AWS::NoValue']
-      MultiAZ: !Ref DBMultiAZ
-      StorageEncrypted: !If [UseDatabaseEncryption, !Ref DBStorageEncrypted, !Ref 'AWS::NoValue']
-      StorageType: !If [DBProvisionedIops, io1, gp2]
-      Tags:
-        - Key: Name
-          Value: !Sub ["${StackName} Confluence PostgreSQL Database", StackName: !Ref 'AWS::StackName']
-      VPCSecurityGroups: [!Ref SecurityGroup]
-  DBSubnetGroup:
-    Type: AWS::RDS::DBSubnetGroup
-    Properties:
-      DBSubnetGroupDescription: DBSubnetGroup
-      SubnetIds: !Split [ ",", !ImportValue ATL-PriNets]
-=======
       TemplateURL: !Sub
         - https://${QSS3BucketName}.${QSS3Region}.amazonaws.com/${QSS3KeyPrefix}submodules/quickstart-atlassian-services/templates/quickstart-database-for-atlassian-services.yaml
         - QSS3Region: !If ["GovCloudCondition", "s3-us-gov-west-1", "s3"]
@@ -1613,7 +1589,6 @@ Resources:
         DBStorageType: !Ref DBStorageType
         QSS3BucketName: !Ref QSS3BucketName
         QSS3KeyPrefix: !Ref QSS3KeyPrefix
->>>>>>> upstream/develop
   DBCname:
     Condition: UseHostedZone
     Type: AWS::Route53::RecordSet
@@ -1792,8 +1767,6 @@ Resources:
       FromPort: -1
       ToPort: -1
       SourceSecurityGroupId: !Ref SecurityGroup
-<<<<<<< HEAD
-=======
 # Optional: CloudWatch dashboard to be created when CloudWatch is enabled
   CloudWatchDashboard:
     DependsOn:
@@ -1810,7 +1783,6 @@ Resources:
         AsgToMonitor: !Ref ClusterNodeGroup
         DatabaseIdentifier: !Sub ["${DBStackNamePrefix}-db", {DBStackNamePrefix: !Ref 'AWS::StackName'}]
 
->>>>>>> upstream/develop
 Outputs:
   ServiceURL:
     Description: The URL to access this Atlassian service
@@ -1847,11 +1819,7 @@ Outputs:
       }
   DBEndpointAddress:
     Description: The Database Connection String
-<<<<<<< HEAD
-    Value: !GetAtt DB.Endpoint.Address
-=======
     Value: !GetAtt DB.Outputs.RDSEndPointAddress
->>>>>>> upstream/develop
   EFSCname:
     Description: The cname of the EFS
     Value: !If
